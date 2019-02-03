@@ -1,0 +1,15 @@
+{
+  "name": "notion-inviter",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "engines": {
+    "node": "11.x",
+    "yarn": "1.x"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4"
+  }
+}
