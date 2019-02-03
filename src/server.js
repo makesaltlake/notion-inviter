@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const notion = require('./notion.js');
 
 const PORT = 16710;
 
