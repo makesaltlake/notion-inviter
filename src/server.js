@@ -1,7 +1,7 @@
 const express = require('express');
 const notion = require('./notion.js');
 
-const PORT = 16710;
+const PORT = parseInt(process.env.PORT || 16710);
 
 const app = express();
 
