@@ -1,10 +1,26 @@
-const express = require('express');
+const botkit = require('botkit');
 const notion = require('./notion.js');
 
-const PORT = parseInt(process.env.PORT || 16710);
+const SLACK_CLIENT_ID = process.env.SLACK_CLIENT_ID;
+const SLACK_CLIENT_SECRET = process.env.SLACK_CLIENT_SECRET;
+const SLACK_SIGNING_SECRET = process.env.SLACK_SIGNING_SECRET;
+const PORT = process.env.PORT;
 
-const app = express();
+const bot = botkit.slackbot({
+  clientId: SLACK_CLIENT_ID,
+  clientSecret: SLACK_CLIENT_SECRET,
+  clientSigningSecret: SLACK_SIGNING_SECRET
+});
 
-app.get('/', (req, res) => res.send("it's alive!!!"));
+bot.setupWebserver(PORT, (err, server) => {
+  bot
+    .createHomepageEndpoint(bot.server)
+    .createWebhookEndpoints(bot.webserver)
+});
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+bot.on('slash_command', (slashCommand, message) => {
+  if (message.command === '/notion-invite') {
+    console.log('got a slash command!');
+    slashCommand.replyPrivate(message, `Yo, I got it! Here's what you said: ${message}`);
+  }
+});
